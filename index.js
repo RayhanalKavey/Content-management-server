@@ -28,6 +28,19 @@ async function dbConnect() {
   }
 }
 dbConnect();
+
+async function run() {
+  try {
+    const blogCollection = client.db("contentManager").collection("blogs");
+    app.post("/blog-add", async (req, res) => {
+      const blog = req.body;
+      const result = await blogCollection.insertOne(blog);
+      res.send(result);
+    });
+  } finally {
+  }
+}
+run();
 const blog = require("./blog-post");
 app.get("/blog-post", (req, res) => {
   res.send(blog);
