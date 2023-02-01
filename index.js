@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 require("dotenv").config();
 require("colors");
@@ -27,7 +28,10 @@ async function dbConnect() {
   }
 }
 dbConnect();
-
+const blog = require("./blog-post");
+app.get("/blog-post", (req, res) => {
+  res.send(blog);
+});
 app.get("/", (req, res) => {
   res.send("Welcome to the  server.");
 });
