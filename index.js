@@ -45,26 +45,24 @@ async function run() {
     });
     app.delete("/blog-delete/:id", async (req, res) => {
       const id = req.params.id;
-      // console.log(id);
       const query = { _id: new ObjectId(id) };
       const result = await blogCollection.deleteOne(query);
-      // console.log(result);
       res.send(result);
     });
-    //  app.delete("/blog-delete/:id", async (req, res) => {
-    //    const id = req.params.id;
-    //    const query = { _id:new ObjectId(id) };
-    //    const result = await usersCollection.deleteOne(query);
-    //    res.send(result);
-    //  });
+
     app.put("/blog-edit/:id", async (req, res) => {
       const id = req.params.id;
-      const query = { _id: ObjectId(id) };
       const blog = req.body;
-      // console.log(comment.comment);
+      const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
-      const updatedDoc = { $set: blog };
-      const result = await taskCollection.updateOne(query, updatedDoc, options);
+      const updatedDoc = {
+        $set: blog,
+      };
+      const result = await blogCollection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
       res.send(result);
     });
   } finally {
